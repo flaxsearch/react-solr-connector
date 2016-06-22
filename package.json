@@ -1,0 +1,41 @@
+{
+  "name": "react-solr-connector",
+  "version": "1.0.0",
+  "description": "A simple React component which provides access to a Solr server",
+  "main": "src/react-solr-connector.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flaxsearch/react-solr-connector.git"
+  },
+  "keywords": [
+    "solr",
+    "react"
+  ],
+  "author": "Tom Mortimer <tom@flax.co.uk>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/flaxsearch/react-solr-connector/issues"
+  },
+  "homepage": "https://github.com/flaxsearch/react-solr-connector#readme",
+  "dependencies": {
+    "react": "^15.1.0",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-jest": "^12.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "jest-cli": "^12.1.1",
+    "react-addons-test-utils": "^15.1.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
