@@ -4,18 +4,31 @@ class SolrConnector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      busy: true,
+      searchParams: null,
+      busy: false,
+      error: null,
       response: null
     };
   }
 
-  render() {
-    console.log("FIXME SolrConnector.render");
+  // run a search asynchronously. Child components are passed this as a callback
+  doSearch(searchParams) {
+    this.setState({ busy: true, searchParams });
+    setTimeout(() => {
+      this.setState({
+        busy: false,
+        response: "FIXME " + new Date().getTime()
+      });
+    }, 2000);
+  }
 
-    // this is the object we will inject into the children
+  render() {
     let solrConnector = {
-      conf: this.props.conf,
-      searchParams: this.props.searchParams
+      searchParams: this.state.searchParams,
+      busy: this.state.busy,
+      error: this.state.error,
+      response: this.state.response,
+      doSearch: this.doSearch.bind(this)
     };
 
     const clones = React.Children.map(this.props.children, child =>
