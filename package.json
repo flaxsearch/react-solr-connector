@@ -4,7 +4,8 @@
   "description": "A simple React component which provides access to a Solr server",
   "main": "src/react-solr-connector.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "webpack-dev-server --progress"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
@@ -33,8 +34,10 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "bootstrap": "^3.3.6",
     "jest-cli": "^12.1.1",
     "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.1.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
