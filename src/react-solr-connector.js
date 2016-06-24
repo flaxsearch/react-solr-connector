@@ -13,13 +13,48 @@ class SolrConnector extends React.Component {
 
   // run a search asynchronously. Child components are passed this as a callback
   doSearch(searchParams) {
-    this.setState({ busy: true, searchParams });
-    setTimeout(() => {
-      this.setState({
-        busy: false,
-        response: "FIXME " + new Date().getTime()
+    this.setState({ busy: true, error: null, searchParams });
+
+    let solrParams = {
+      offset: searchParams.offset,
+      limit: searchParams.limit,
+      query: searchParams.query,
+      filter: searchParams.filters,
+      fields: searchParams.fetchFields,
+      params: {
+        wt: "json"
+      }
+    };
+
+    const reqBody = JSON.stringify(solrParams);
+
+    // do the search. 'post' is required with a fetch() body. Solr doesn't mind
+    fetch(searchParams.solrSearchUrl, {
+      method: 'post',
+      body: reqBody,
+      headers: new Headers({
+      		'Content-Type': 'application/json'
+        })
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw response.status + " " + response.statusText;
+      }
+    })
+    .then((response) => {
+      this.setState({ busy: false, error: null,
+        response: this.makeSearchResponse(response, searchParams)
       });
-    }, 2000);
+    })
+    .catch((error) => {
+      this.setState({ busy: false, error: "" + error });
+    });
+  }
+
+  makeSearchResponse(resp, searchParams) {
+    return resp;    // FIXME
   }
 
   render() {
