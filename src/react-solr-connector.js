@@ -15,15 +15,15 @@ class SolrConnector extends React.Component {
   doSearch(searchParams) {
     this.setState({ busy: true, error: null, searchParams });
 
+    let params = Object.assign({wt: "json"}, searchParams.highlightParams);
     let solrParams = {
       offset: searchParams.offset,
       limit: searchParams.limit,
       query: searchParams.query,
-      filter: searchParams.filters,
+      filter: searchParams.filter,
       fields: searchParams.fetchFields,
-      params: {
-        wt: "json"
-      }
+      facet: searchParams.facet,
+      params
     };
 
     const reqBody = JSON.stringify(solrParams);
@@ -53,8 +53,23 @@ class SolrConnector extends React.Component {
     });
   }
 
-  makeSearchResponse(resp, searchParams) {
-    return resp;    // FIXME
+  makeSearchResponse(response, searchParams) {
+    if (searchParams.idField && searchParams.highlightParams) {
+      // merge the highlighted fields into the main docs array for convenience
+      if (response.highlighting) {
+        response.response.docs = response.response.docs.map(doc => {
+          const id = doc[searchParams.idField];
+          if (id === undefined) {
+            throw "unable to merge highlighting data, is '" +
+              searchParams.idField + "' present and in fetchFields?";
+          }
+          return Object.assign(doc, {
+            hl: response.highlighting[id]
+          });
+        });
+      }
+    }
+    return response;
   }
 
   render() {
