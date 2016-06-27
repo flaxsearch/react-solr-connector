@@ -6,15 +6,38 @@ class SolrConnectorDemo extends React.Component {
     this.state = {
       solrSearchUrl: "http://localhost:8983/solr/techproducts/select",
       query: "memory",
+      filter: "",
+      fetchFields: ""
     }
   }
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.solrConnector.doSearch({
+    let searchParams = {
+      facet: {
+        manufacturer: {
+          type: "terms",
+          field: "manu_id_s",
+          limit: 20
+        },
+        price_range_0_100: {
+          query: "price:[0 TO 100]"
+        }
+      },
       solrSearchUrl: this.state.solrSearchUrl,
-      query: this.state.query
-    });
+      query: this.state.query,
+      limit: 10,
+      highlightParams: {
+        "hl": "true",
+        "hl.fl": "name manu",
+        "hl.snippets": 1,
+        "hl.fragsize": 500
+      },
+      idField: "id",
+      filter: [this.state.filter],
+      fetchFields: this.state.fetchFields.split(" ")
+    };
+    this.props.solrConnector.doSearch(searchParams);
   }
 
   render() {
@@ -30,6 +53,15 @@ class SolrConnectorDemo extends React.Component {
           query: {" "}
           <input type="text" value={this.state.query}
             onChange={e => {this.setState({ query: e.target.value })}} />
+          {" "}
+          filter: {" "}
+          <input type="text" value={this.state.filter}
+            onChange={e => {this.setState({ filter: e.target.value })}} />
+        </p>
+        <p>
+          fetchFields: {" "}
+          <input type="text" value={this.state.fetchFields}
+            onChange={e => {this.setState({ fetchFields: e.target.value })}} />
         </p>
         <p>
           <button type="submit">Search</button>
