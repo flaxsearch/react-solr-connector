@@ -49,7 +49,7 @@ class SolrConnector extends React.Component {
       });
     })
     .catch((error) => {
-      this.setState({ busy: false, error: "" + error });
+      this.setState({ busy: false, error: "" + error, response: null });
     });
   }
 
