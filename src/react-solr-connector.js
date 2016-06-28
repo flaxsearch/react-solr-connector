@@ -33,8 +33,8 @@ class SolrConnector extends React.Component {
       method: 'post',
       body: reqBody,
       headers: new Headers({
-      		'Content-Type': 'application/json'
-        })
+    		'Content-Type': 'application/json'
+      })
     })
     .then((response) => {
       if (response.ok) {
