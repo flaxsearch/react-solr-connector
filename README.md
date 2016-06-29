@@ -3,7 +3,7 @@ A React component which provides access to a Solr server. Suitable for use in si
 
 ## Installation
 
-Install the module with npm:
+Install the module with npm (FIXME - not yet published to npm):
 ```
 npm install --save react-solr-connector
 ```
