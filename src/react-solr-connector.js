@@ -44,32 +44,11 @@ class SolrConnector extends React.Component {
       }
     })
     .then((response) => {
-      this.setState({ busy: false, error: null,
-        response: this.makeSearchResponse(response, searchParams)
-      });
+      this.setState({ busy: false, error: null, response });
     })
     .catch((error) => {
       this.setState({ busy: false, error: "" + error, response: null });
     });
-  }
-
-  makeSearchResponse(response, searchParams) {
-    if (searchParams.idField && searchParams.highlightParams) {
-      // merge the highlighted fields into the main docs array for convenience
-      if (response.highlighting) {
-        response.response.docs = response.response.docs.map(doc => {
-          const id = doc[searchParams.idField];
-          if (id === undefined) {
-            throw "unable to merge highlighting data, is '" +
-              searchParams.idField + "' present and in fetchFields?";
-          }
-          return Object.assign(doc, {
-            hl: response.highlighting[id]
-          });
-        });
-      }
-    }
-    return response;
   }
 
   render() {
