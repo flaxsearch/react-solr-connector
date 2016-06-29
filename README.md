@@ -46,7 +46,7 @@ The object passed to `doSearch` must have the following properties as a minimum:
 
 Where `query` is the user-entered query string and `solrSearchUrl` is a Solr search endpoint, e.g.:
 ```
-http://localhost:8983/solrtechproducts/select
+http://localhost:8983/solr/techproducts/select
 ```
 
 If you are serving the app from a different host then you will have to
