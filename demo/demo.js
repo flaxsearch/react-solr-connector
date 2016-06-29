@@ -33,7 +33,6 @@ class SolrConnectorDemo extends React.Component {
         "hl.snippets": 1,
         "hl.fragsize": 500
       },
-      idField: "id",
       filter: [this.state.filter],
       fetchFields: this.state.fetchFields.split(" ")
     };
