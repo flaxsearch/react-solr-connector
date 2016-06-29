@@ -66,7 +66,9 @@ Most of these correspond exactly with properties in the
 The exceptions are `fetchFields`, which corresponds to the Solr `fields` (which is not a very clear name in my opinion) and `highlightParams`. In fact, highlightParams can contain any of the "traditional" Solr params that the JSON API does not currently support, but highlighting is the most obvious application.
 
 ## Running tests
-If you have cloned the react-solr-connector GitHub repository, you can run the `jest` tests with the following commands:
+If you have cloned the `react-solr-connector`
+[GitHub repository](https://github.com/flaxsearch/react-solr-connector),
+you can run the `jest` tests with the following commands:
 ```
 $ npm install
 $ npm tests
@@ -74,7 +76,6 @@ $ npm tests
 
 ## Running the demo
 To run the simple demo, install Solr 6 and start it with the `techproducts` example:
-
 ```
 $ bin/solr start -e techproducts
 ```
