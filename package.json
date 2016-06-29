@@ -1,11 +1,13 @@
 {
   "name": "react-solr-connector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple React component which provides access to a Solr server",
-  "main": "src/react-solr-connector.js",
+  "main": "lib/react-solr-connector.js",
   "scripts": {
     "test": "jest",
-    "start": "webpack-dev-server --progress"
+    "start": "webpack-dev-server --progress",
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
@@ -29,6 +31,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-jest": "^12.1.0",
     "babel-loader": "^6.2.4",

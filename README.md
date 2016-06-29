@@ -7,7 +7,7 @@ Since the component uses the Solr JSON API, only versions from 5 onward are supp
 
 ## Installation
 
-Install the module with npm (FIXME - not yet published to npm):
+Install the module with npm:
 ```
 npm install --save react-solr-connector
 ```
