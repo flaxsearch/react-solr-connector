@@ -1,5 +1,9 @@
 # react-solr-connector
-A React component which provides access to a Solr server. Suitable for use in simple React apps which do not make use of state management frameworks like Redux. Since the component uses the Solr JSON API, only versions from 5 onward are supported (and I have only tested with 6.0.0).
+A React component which provides access to a
+[Solr](http://lucene.apache.org/solr/)
+server. Suitable for use in simple React apps which do not make use of a state management framework like
+[Redux](https://github.com/reactjs/redux).
+Since the component uses the Solr JSON API, only versions from 5 onward are supported (and I have only tested with 6.0.0).
 
 ## Installation
 
