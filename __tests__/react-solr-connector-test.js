@@ -21,15 +21,6 @@ describe("react-solr-connector", () => {
     expect(child.textContent).toBe("exists");
   });
 
-  it("has doSearch function", () => {
-    const Child = props => <div className="child">
-        {typeof props.solrConnector.doSearch}</div>;
-    const sc = <SolrConnector><Child/></SolrConnector>;
-    const comp = TestUtils.renderIntoDocument(sc);
-    const child = TestUtils.findRenderedDOMComponentWithClass(comp, "child");
-    expect(child.textContent).toBe("function");
-  });
-
   it("is not busy at first", () => {
     const Child = props => <div className="child">
         {props.solrConnector.busy === false ? "yes": "no"}</div>;
@@ -49,20 +40,17 @@ describe("react-solr-connector", () => {
           expect(props.solrConnector.error).toBeNull();
           resolve(props.solrConnector.response);
         }
-        return <div className="child" onClick={() => {
-          props.solrConnector.doSearch({
-            solrSearchUrl: "http://fetch.mock/response"
-          });
-        }}></div>;
+        return <div className="child"></div>;
       };
     });
 
-    const sc = <SolrConnector><Child/></SolrConnector>;
+    const searchParams = {
+      solrSearchUrl: "http://fetch.mock/response",
+      query: "banana"
+    };
+    const sc = <SolrConnector searchParams={searchParams}>
+      <Child/></SolrConnector>;
     const comp = TestUtils.renderIntoDocument(sc);
-
-    // run the search
-    TestUtils.Simulate.click(
-      TestUtils.findRenderedDOMComponentWithClass(comp, "child"));
 
     // wait for the response
     return prom.then(response => {
@@ -70,6 +58,31 @@ describe("react-solr-connector", () => {
       expect(response.response.docs.length).toBe(2);
       expect(response.response.docs[0].id).toBe("VS1GB400C3");
     });
+  });
+
+  it("doesn't search if query is empty", () => {
+    // use a Promise so we can check the Child props asynchronously
+    let Child = null;
+    let prom = new Promise(resolve => {
+      Child = props => {
+        expect(props.solrConnector.response).toBe(null);
+        if (props.solrConnector.busy === false) {
+          resolve(null);
+        }
+        return <div className="child"></div>;
+      };
+    });
+
+    const searchParams = {
+      solrSearchUrl: "http://fetch.mock/response",
+      query: ""
+    };
+    const sc = <SolrConnector searchParams={searchParams}>
+      <Child/></SolrConnector>;
+    const comp = TestUtils.renderIntoDocument(sc);
+
+    // wait for the response
+    return prom.then(response => {});
   });
 
   it("has handles error from server", () => {
@@ -83,19 +96,18 @@ describe("react-solr-connector", () => {
           resolve(props.solrConnector.error);
         }
         return <div className="child" onClick={() => {
-          props.solrConnector.doSearch({
-            solrSearchUrl: "http://fetch.mock/badRequest"
-          });
+          props.solrConnector.doSearch();
         }}></div>;
       };
     });
 
-    const sc = <SolrConnector><Child/></SolrConnector>;
+    const searchParams = {
+      solrSearchUrl: "http://fetch.mock/badRequest",
+      query: "banana"
+    };
+    const sc = <SolrConnector searchParams={searchParams}>
+      <Child/></SolrConnector>;
     const comp = TestUtils.renderIntoDocument(sc);
-
-    // run the search
-    TestUtils.Simulate.click(
-      TestUtils.findRenderedDOMComponentWithClass(comp, "child"));
 
     // wait for the response
     return prom.then(error => {
