@@ -12,8 +12,7 @@ class SolrConnector extends React.Component {
   }
 
   /*
-   * When the component mounts, do an initial search in case there is a
-   * query in the location.
+   * When the component mounts, do an initial search.
    */
   componentDidMount() {
     if (this.props.searchParams) {
@@ -22,7 +21,7 @@ class SolrConnector extends React.Component {
   }
 
   /*
-   * something has changed, probably the location. Update the search results.
+   * something has changed. Update the search results.
    */
   componentWillReceiveProps(newProps) {
     if (newProps.searchParams) {
