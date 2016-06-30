@@ -14,6 +14,12 @@ class SolrConnectorDemo extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     let searchParams = {
+      solrSearchUrl: this.state.solrSearchUrl,
+      query: this.state.query,
+      filter: [this.state.filter],
+      fetchFields: this.state.fetchFields.split(" "),
+      offset: 0,
+      limit: 10,
       facet: {
         manufacturer: {
           type: "terms",
@@ -24,19 +30,14 @@ class SolrConnectorDemo extends React.Component {
           query: "price:[0 TO 100]"
         }
       },
-      solrSearchUrl: this.state.solrSearchUrl,
-      query: this.state.query,
-      limit: 10,
       highlightParams: {
         "hl": "true",
         "hl.fl": "name manu",
         "hl.snippets": 1,
         "hl.fragsize": 500
-      },
-      filter: [this.state.filter],
-      fetchFields: this.state.fetchFields.split(" ")
+      }
     };
-    this.props.solrConnector.doSearch(searchParams);
+    this.props.doSearch(searchParams);
   }
 
   render() {
