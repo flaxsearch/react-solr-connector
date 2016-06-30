@@ -18,7 +18,7 @@ The module exports one default object, `SolrConnector`. This should be used to w
 ```
 import SolrConnector from 'react-solr-connector';
 ...
-<SolrConnector>
+<SolrConnector searchParams={searchParams}>
   <MyApp/>
 </SolrConnector>
 ```
@@ -26,7 +26,6 @@ import SolrConnector from 'react-solr-connector';
 `SolrConnector` injects a `solrConnector` prop into all of its immediate children. This is an object with the structure:
 ```
 {
-  doSearch,
   searchParams,
   busy,
   response,
@@ -34,9 +33,9 @@ import SolrConnector from 'react-solr-connector';
 }
 ```
 
-`doSearch` is a function which should be called from the app to trigger a Solr search, for example when a Search button is clicked. The calling code should pass an object containing search parameters (see below). `searchParams` is a copy of the object passed to `doSearch`. The search is performed asynchronously and `busy` is set to true in the interval between `doSearch` being called and the response (or error) being available (`busy` could be used to indicate to the user that a search is in progress, for example by displaying a spinner). `response` is null until a response from Solr is received, at which point it is set to the value of the response object from Solr (including the `responseHeader`, the main `response` object, and any `facets`, `highlighting` objects, etc.) `busy` is also set to `false`. If an error occurs, the `error` property is set (to a descriptive string) instead of the `response` property.
+SolrConnector is passed a prop called `searchParams` (which is also copied into the injected `solrConnector` prop). If `searchParams` contains a non-empty query then the search is performed asynchronously and `busy` is set to true (this could be used to indicate to the user that a search is in progress, for example by displaying a spinner). `response` is null until a response from Solr is received, at which point it is set to the value of the response object from Solr (including the `responseHeader`, the main `response` object, and any `facets`, `highlighting` objects, etc.) `busy` is also set to `false`. If an error occurs, the `error` property is set (to a descriptive string) instead of the `response` property. A search is performed when the component first mounts, and thereafter any time it receives new props.
 
-The object passed to `doSearch` must have the following properties as a minimum:
+`searchParams` must have the following properties as a minimum:
 ```
 {
   solrSearchUrl,
