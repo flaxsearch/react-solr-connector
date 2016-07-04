@@ -4,7 +4,7 @@ class SolrConnector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchParams: null,
+      searchParams: props.searchParams,
       busy: false,
       error: null,
       response: null
