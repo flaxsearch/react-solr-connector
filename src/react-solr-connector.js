@@ -40,6 +40,7 @@ class SolrConnector extends React.Component {
         filter: searchParams.filter,
         fields: searchParams.fetchFields,
         facet: searchParams.facet,
+        sort: searchParams.sort,
         params
       };
 

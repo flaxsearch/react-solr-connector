@@ -60,6 +60,7 @@ Optional properties for `doSearch` are:
   filter,
   fetchFields,
   facet,
+  sort,
   highlightParams
 }
 ```
